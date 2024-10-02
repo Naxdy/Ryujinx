@@ -33,7 +33,7 @@ Or install it declaratively by adding the following to your `flake.nix` (either 
 }
 ```
 
-The Ryujinx flake provides `nixosModules.default` which will add the Ryujinx `overlay` (also available standalone via `overlays.default`), providing the `ryujinx` package to your installation, which can then be pulled in as usual, via e.g.:
+The Ryujinx flake provides `nixosModules.x86_64-linux.default` and `nixosModules.aarch64-linux.default` which will add the Ryujinx `overlay` (also available standalone via `overlays.default`), providing the `ryujinx` package to your installation, which can then be pulled in as usual, via e.g.:
 
 ```nix
 environment.systemPackages = [
