@@ -173,3 +173,7 @@ PublishProfiles/
 
 # Glade backup files
 *.glade~
+
+# nix
+/result
+/result-*

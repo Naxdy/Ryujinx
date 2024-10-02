@@ -1,6 +1,51 @@
+> [!WARNING]
+> Ryujinx has ceased upstream development. This repository exists for historical purposes only, as well as to provide a Nix flake that can be easily installed on other systems.
+
+To run Ryujinx on a system with Nix installed and flakes enabled, simply run:
+
+```shell
+nix run github:Naxdy/Ryujinx#default
+
+# -or-
+
+nix run git+https://git.naxdy.org/NaxdyOrg/Ryujinx.git#default
+```
+
+This will download, build, and run Ryujinx on your machine. For a more permanent installation, you can either install it imperatively via:
+
+```shell
+nix profile install github:Naxdy/Ryujinx#default
+
+# -or-
+
+nix profile install git+https://git.naxdy.org/NaxdyOrg/Ryujinx.git#default
+```
+
+Or install it declaratively by adding the following to your `flake.nix` (either NixOS or home manager):
+
+```nix
+{
+  inputs.ryujinx.url = "github:Naxdy/Ryujinx";
+
+  # -or-
+
+  inputs.ryujinx.url = "git+https://git.naxdy.org/NaxdyOrg/Ryujinx.git";
+}
+```
+
+The Ryujinx flake provides `nixosModules.default` which will add the Ryujinx `overlay` (also available standalone via `overlays.default`), providing the `ryujinx` package to your installation, which can then be pulled in as usual, via e.g.:
+
+```nix
+environment.systemPackages = [
+  pkgs.ryujinx
+];
+```
+
+---
+
 <h1 align="center">
   <br>
-  <a href="https://ryujinx.org/"><img src="https://raw.githubusercontent.com/Ryujinx/Ryujinx/master/distribution/misc/Logo.svg" alt="Ryujinx" width="150"></a>
+  <a href="https://ryujinx.org/"><img src="./distribution/misc/Logo.svg" alt="Ryujinx" width="150"></a>
   <br>
   <b>Ryujinx</b>
   <br>
@@ -12,26 +57,8 @@
   Ryujinx is an open-source Nintendo Switch emulator, created by gdkchan, written in C#.
   This emulator aims at providing excellent accuracy and performance, a user-friendly interface and consistent builds.
   It was written from scratch and development on the project began in September 2017.
-  Ryujinx is available on Github under the <a href="https://github.com/Ryujinx/Ryujinx/blob/master/LICENSE.txt" target="_blank">MIT license</a>.
+  Ryujinx is available on Github under the <a href="./LICENSE.txt" target="_blank">MIT license</a>.
   <br />
-</p>
-
-<p align="center">
-    <a href="https://github.com/Ryujinx/Ryujinx/actions/workflows/release.yml">
-        <img src="https://github.com/Ryujinx/Ryujinx/actions/workflows/release.yml/badge.svg"
-            alt="">
-    </a>
-    <a href="https://crwd.in/ryujinx">
-        <img src="https://badges.crowdin.net/ryujinx/localized.svg"
-            alt="">
-    </a>
-    <a href="https://discord.com/invite/VkQYXAZ">
-        <img src="https://img.shields.io/discord/410208534861447168?color=5865F2&label=Ryujinx&logo=discord&logoColor=white"
-            alt="Discord">
-    </a>
-    <br>
-    <br>
-    <img src="https://raw.githubusercontent.com/Ryujinx/Ryujinx-Website/master/public/assets/images/shell.png">
 </p>
 
 ## Compatibility
@@ -53,7 +80,7 @@ failing to meet this requirement may result in a poor gameplay experience or une
 See our [Setup & Configuration Guide](https://github.com/Ryujinx/Ryujinx/wiki/Ryujinx-Setup-&-Configuration-Guide) on how to set up the emulator.
 
 For our Local Wireless (LDN) builds, see our [Multiplayer: Local Play/Local Wireless Guide
-](https://github.com/Ryujinx/Ryujinx/wiki/Multiplayer-(LDN-Local-Wireless)-Guide).
+](<https://github.com/Ryujinx/Ryujinx/wiki/Multiplayer-(LDN-Local-Wireless)-Guide>).
 
 Avalonia UI comes with translations for various languages. See [Crowdin](https://crwd.in/ryujinx) for more information.
 
@@ -77,7 +104,7 @@ If you wish to build the emulator yourself, follow these steps:
 ### Step 1
 
 Install the [.NET 8.0 (or higher) SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
-Make sure your SDK version is higher or equal to the required version specified in [global.json](global.json). 
+Make sure your SDK version is higher or equal to the required version specified in [global.json](global.json).
 
 ### Step 2
 
@@ -106,7 +133,7 @@ This folder is located in the user folder, which can be accessed by clicking `Op
   It translates the ARM code to a custom IR, performs a few optimizations, and turns that into x86 code.
   There are three memory manager options available depending on the user's preference, leveraging both software-based (slower) and host-mapped modes (much faster).
   The fastest option (host, unchecked) is set by default.
-  Ryujinx also features an optional Profiled Persistent Translation Cache, which essentially caches translated functions so that they do not need to be translated every time the game loads. 
+  Ryujinx also features an optional Profiled Persistent Translation Cache, which essentially caches translated functions so that they do not need to be translated every time the game loads.
   The net result is a significant reduction in load times (the amount of time between launching a game and arriving at the title screen) for nearly every game.
   NOTE: This feature is enabled by default in the Options menu > System tab.
   You must launch the game at least twice to the title screen or beyond before performance improvements are unlocked on the third launch!
@@ -149,10 +176,11 @@ If you'd like to support the project financially, Ryujinx has an active Patreon 
 </a>
 
 All developers working on the project do so in their free time, but the project has several expenses:
-* Hackable Nintendo Switch consoles to reverse-engineer the hardware
-* Additional computer hardware for testing purposes (e.g. GPUs to diagnose graphical bugs, etc.)
-* Licenses for various software development tools (e.g. Jetbrains, IDA)
-* Web hosting and infrastructure maintenance (e.g. LDN servers)
+
+- Hackable Nintendo Switch consoles to reverse-engineer the hardware
+- Additional computer hardware for testing purposes (e.g. GPUs to diagnose graphical bugs, etc.)
+- Licenses for various software development tools (e.g. Jetbrains, IDA)
+- Web hosting and infrastructure maintenance (e.g. LDN servers)
 
 All funds received through Patreon are considered a donation to support the project. Patrons receive early access to progress reports and exclusive access to developer interviews.
 
