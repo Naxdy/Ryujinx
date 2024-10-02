@@ -11,22 +11,21 @@
     { self
     , nixpkgs
     , flake-utils
-    }: flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system: {
-
+    }: (flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system: {
       packages.default =
         let
           pkgs = import nixpkgs {
             inherit system;
             overlays = [
-              self.overlays.${system}.default
+              self.overlays.default
             ];
           };
         in
         pkgs.ryujinx;
-
+    })) // {
       nixosModules.default = { config, lib, pkgs, ... }: {
         nixpkgs.overlays = [
-          self.overlays.${system}.default
+          self.overlays.default
         ];
       };
 
@@ -35,5 +34,5 @@
           src = self;
         };
       };
-    });
+    };
 }
